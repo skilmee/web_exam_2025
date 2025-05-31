@@ -1,0 +1,34 @@
+{% extends "library/base.html" %}
+{% load static %}
+
+{% block title %}Добавить книгу{% endblock %}
+
+{% block content %}
+<div class="book-form-container">
+  <h1>Добавление книги</h1>
+  <form method="post" enctype="multipart/form-data" class="book-form">
+    {% csrf_token %}
+    {% include "library/macros.html" %}
+
+    <div class="form-group">
+      <label for="cover">Обложка</label>
+      <input type="file" name="cover" id="cover" required>
+      {% if form.cover.errors %}
+        <div class="field-error">
+          {% for error in form.cover.errors %}
+            <p>{{ error }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+
+    <button type="submit">Добавить</button>
+  </form>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    new EasyMDE({ element: document.getElementById("description") });
+  });
+</script>
+{% endblock %}

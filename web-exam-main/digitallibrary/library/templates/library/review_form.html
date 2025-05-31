@@ -1,0 +1,33 @@
+{% extends "library/base.html" %}
+{% load static %}
+
+{% block title %}Рецензия на {{ book.title }}{% endblock %}
+
+{% block content %}
+<div class="review-form-container">
+  <h1>Написать рецензию на «{{ book.title }}»</h1>
+  <form method="POST" class="review-form">
+    {% csrf_token %}
+
+    <div class="form-group">
+      <label for="id_rating">Оценка</label>
+      {{ form.rating }}
+    </div>
+
+    <div class="form-group">
+      <label for="id_text">Текст рецензии</label>
+      {{ form.text }}
+    </div>
+
+    <button type="submit">Сохранить</button>
+  </form>
+</div>
+
+<link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
+<script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    new EasyMDE({ element: document.getElementById("id_text") });
+  });
+</script>
+{% endblock %}

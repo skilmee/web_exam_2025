@@ -1,0 +1,22 @@
+{% extends "library/base.html" %}
+{% load static %}
+
+{% block title %}Редактировать книгу{% endblock %}
+
+{% block content %}
+<div class="book-form-container">
+  <h1>Редактирование книги</h1>
+  <form method="post" class="book-form">
+    {% csrf_token %}
+    {% include "library/macros.html" %}
+
+    <button type="submit">Сохранить изменения</button>
+  </form>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    new EasyMDE({ element: document.getElementById("description") });
+  });
+</script>
+{% endblock %}

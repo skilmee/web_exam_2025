@@ -1,0 +1,61 @@
+{% extends "library/base.html" %}
+
+{% block title %}{{ book.title }}{% endblock %}
+
+{% block content %}
+<div class="book-detail-container">
+  <h1>{{ book.title }}</h1>
+
+  {% if book.cover %}
+    <img
+      src="/static/library/images/{{ book.cover.filename }}"
+      alt="Обложка книги"
+      class="book-cover-view"
+    >
+  {% endif %}
+
+  <ul class="book-meta-list">
+    <li><strong>Автор:</strong> {{ book.author }}</li>
+    <li><strong>Жанры:</strong> {{ book.genres.all|join:", " }}</li>
+    <li><strong>Год:</strong> {{ book.year }}</li>
+    <li><strong>Издательство:</strong> {{ book.publisher }}</li>
+    <li><strong>Объём:</strong> {{ book.pages }} стр.</li>
+    <li><strong>Рецензий:</strong> {{ l_reviews }}</li>
+    <li><strong>Средняя оценка:</strong> {{ avg_reviews }}</li>
+  </ul>
+
+  <div class="book-description">
+    <h3>Описание</h3>
+    <div>{{ description_html|safe }}</div>
+  </div>
+
+  <div class="reviews-section">
+    <h2>Рецензии</h2>
+    {% for review in approved_reviews %}
+      <div class="review-card">
+        <p><strong>Оценка:</strong> {{ review.rating }}/5</p>
+        <div>{{ review.text|safe }}</div>
+        <p><em>Автор: {{ review.user.get_full_name|default:review.user.username }}</em></p>
+      </div>
+    {% empty %}
+      <p>Пока нет рецензий.</p>
+    {% endfor %}
+
+    {% if user.is_authenticated and user.role.name in 'user moderator administrator' %}
+      {% if not user_review %}
+        <a
+          href="{% url 'review_create' book.id %}"
+          class="btn btn-write-review"
+        >Написать рецензию</a>
+      {% else %}
+        <div class="user-review">
+          <h3>Ваша рецензия:</h3>
+          <p><strong>Оценка:</strong> {{ user_review.rating }}/5</p>
+          <div>{{ user_review.text|safe }}</div>
+          <p><em>Статус: {{ user_review.status.name }}</em></p>
+        </div>
+      {% endif %}
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

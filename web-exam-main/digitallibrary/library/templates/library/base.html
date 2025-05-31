@@ -1,0 +1,74 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Библиотека{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'library/css/styles.css' %}">
+</head>
+<body>
+    <header>
+      <nav>
+        <div class="nav-left">
+          <a href="{% url 'home' %}">Главная</a>
+          {% if user.is_authenticated and user.role.name in 'user moderator administrator' %}
+            <a href="{% url 'my_reviews' %}">Мои рецензии</a>
+          {% endif %}
+          {% if user.is_authenticated and user.role.name == 'moderator' %}
+            <a href="{% url 'review_moderation' %}">Модерация</a>
+          {% endif %}
+        </div>
+        <div class="nav-right">
+          {% if user.is_authenticated %}
+            <span>{{ user.last_name }} {{ user.first_name }} {{ user.middle_name }}</span>
+            <a href="{% url 'logout' %}">Выйти</a>
+          {% else %}
+            <a href="{% url 'login' %}">Войти</a>
+          {% endif %}
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      {% if messages %}
+        <ul class="messages">
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+
+      {% block content %}{% endblock %}
+    </main>
+
+    <div id="deleteModal" class="modal-overlay">
+      <div class="modal-content">
+        <h2>Удаление книги</h2>
+        <p id="deleteText">Вы уверены, что хотите удалить книгу?</p>
+        <form id="deleteForm" method="post" action="">
+          {% csrf_token %}
+          <button type="submit" class="btn">Да</button>
+          <button type="button" class="btn" onclick="closeDeleteModal()">Нет</button>
+        </form>
+      </div>
+    </div>
+
+    <footer>
+      <p>Фёдорова Диана Кирилловна 231-351</p>
+    </footer>
+
+    <script>
+      function openDeleteModal(bookId, bookTitle) {
+        const modal = document.getElementById('deleteModal');
+        modal.classList.add('active');
+        document.getElementById('deleteText').textContent =
+          'Вы уверены, что хотите удалить книгу «' + bookTitle + '»?';
+        document.getElementById('deleteForm').action = '/book/' + bookId + '/delete/';
+      }
+      function closeDeleteModal() {
+        document.getElementById('deleteModal').classList.remove('active');
+      }
+    </script>
+</body>
+</html>

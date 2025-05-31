@@ -1,0 +1,750 @@
+:root {
+    --bg-color: #2b2b2b;
+    --card-bg: #383838;
+    --text-color: #e0e0e0;
+    --btn-bg: #505050;
+    --btn-hover: #606060;
+    --danger-bg: #a94442;
+    --danger-hover: #843534;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+
+header {
+    background-color: var(--card-bg);
+    padding: 10px 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    margin-bottom: 20px;
+}
+header nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+header nav a {
+    color: var(--text-color);
+    margin-right: 15px;
+    text-decoration: none;
+    padding: 6px 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+header nav a:hover {
+    background-color: var(--btn-hover);
+}
+header nav div:last-child a {
+    margin-left: 10px;
+    margin-right: 0;
+}
+
+.messages {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 20px;
+}
+.messages li {
+    background-color: #444;
+    color: var(--text-color);
+    padding: 10px 15px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.7);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+.modal-overlay.active {
+    display: flex;
+}
+.modal-content {
+    background-color: var(--card-bg);
+    padding: 20px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+}
+.modal-content h2 {
+    margin-top: 0;
+    color: var(--text-color);
+}
+.modal-content p {
+    color: var(--text-color);
+    margin: 15px 0;
+}
+.modal-content form button {
+    background-color: var(--btn-bg);
+    color: var(--text-color);
+    border: none;
+    padding: 8px 14px;
+    margin: 0 5px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.modal-content form button:hover {
+    background-color: var(--btn-hover);
+}
+.modal-content form .btn-danger {
+    background-color: var(--danger-bg);
+}
+.modal-content form .btn-danger:hover {
+    background-color: var(--danger-hover);
+}
+
+footer {
+    background-color: var(--card-bg);
+    padding: 15px 20px;
+    text-align: center;
+    margin-top: 40px;
+    border-top: 1px solid #444;
+}
+footer p {
+    margin: 0;
+    color: var(--text-color);
+    font-size: 0.9em;
+}
+
+.books {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.book {
+    display: flex;
+    background-color: var(--card-bg);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    align-items: flex-start;
+}
+
+.book-cover {
+    width: 100px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-right: 20px;
+    flex-shrink: 0;
+}
+
+.book-info {
+    flex: 1;
+}
+
+.book-info h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.5em;
+}
+
+.book-info p {
+    margin: 4px 0;
+}
+
+.book-actions {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+.book-actions a,
+.btn {
+    display: inline-block;
+    background-color: var(--btn-bg);
+    color: var(--text-color);
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.book-actions a:hover,
+.btn:hover {
+    background-color: var(--btn-hover);
+}
+
+.btn-danger {
+    background-color: var(--danger-bg);
+}
+
+.btn-danger:hover {
+    background-color: var(--danger-hover);
+}
+
+.pagination {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.pagination a {
+    background-color: var(--btn-bg);
+    padding: 6px 12px;
+    border-radius: 4px;
+    color: var(--text-color);
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.pagination a:hover {
+    background-color: var(--btn-hover);
+}
+
+.pagination span {
+    color: var(--text-color);
+}
+
+.form-container {
+    max-width: 400px;
+    margin: 40px auto;
+    background-color: var(--card-bg);
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+}
+
+.form-container h1 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: var(--text-color);
+    text-align: center;
+}
+
+.login-form .form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.login-form label {
+    margin-bottom: 5px;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.login-form input[type="text"],
+.login-form input[type="password"] {
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #4a4a4a;
+    color: var(--text-color);
+    font-size: 1em;
+}
+
+.login-form input[type="text"]::placeholder,
+.login-form input[type="password"]::placeholder {
+    color: #bbb;
+}
+
+.login-form .checkbox-group {
+    flex-direction: row;
+    align-items: center;
+}
+
+.login-form .checkbox-group input[type="checkbox"] {
+    margin-right: 8px;
+    width: auto;
+}
+
+.login-form button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    font-size: 1em;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--btn-bg);
+    color: var(--text-color);
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.login-form button[type="submit"]:hover {
+    background-color: var(--btn-hover);
+}
+
+.book-form-container {
+    max-width: 700px;
+    margin: 40px auto;
+    background-color: var(--card-bg);
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+}
+
+.book-form-container h1 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: var(--text-color);
+    text-align: center;
+}
+
+.book-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.book-form .form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.book-form label {
+    margin-bottom: 6px;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.book-form input[type="text"],
+.book-form input[type="number"],
+.book-form input[type="file"],
+.book-form textarea,
+.book-form select {
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #4a4a4a;
+    color: var(--text-color);
+    font-size: 1em;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.book-form textarea {
+    min-height: 120px;
+}
+
+.book-form ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.book-form ul li {
+    margin-bottom: 6px;
+}
+
+.book-form ul li label {
+    display: flex;
+    align-items: center;
+    color: var(--text-color);
+}
+
+.book-form ul li input {
+    margin-right: 8px;
+}
+
+.book-form button[type="submit"] {
+    align-self: flex-start;
+    padding: 10px 20px;
+    font-size: 1em;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--btn-bg);
+    color: var(--text-color);
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.book-form button[type="submit"]:hover {
+    background-color: var(--btn-hover);
+}
+
+.book-detail-container {
+    max-width: 800px;
+    margin: 40px auto;
+    background-color: var(--card-bg);
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+}
+
+.book-detail-container h1 {
+    margin-top: 0;
+    color: var(--text-color);
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.book-cover-view {
+    display: block;
+    max-width: 200px;
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin: 0 auto 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+}
+
+.book-meta-list {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+}
+
+.book-meta-list li {
+    background-color: #4a4a4a;
+    padding: 10px 15px;
+    border-radius: 4px;
+    color: var(--text-color);
+}
+
+.book-description {
+    background-color: #3e3e3e;
+    padding: 20px;
+    border-radius: 6px;
+    margin-bottom: 30px;
+    color: var(--text-color);
+}
+
+.book-description h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: var(--text-color);
+}
+
+.reviews-section {
+    margin-top: 40px;
+}
+
+.reviews-section h2 {
+    color: var(--text-color);
+    margin-bottom: 20px;
+}
+
+.review-card {
+    background-color: #4a4a4a;
+    padding: 20px;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+    margin-bottom: 20px;
+    color: var(--text-color);
+}
+
+.review-card p {
+    margin: 8px 0;
+}
+
+.review-card em {
+    color: #bbb;
+}
+
+.user-review {
+    background-color: #3e3e3e;
+    padding: 20px;
+    border-radius: 6px;
+    margin-top: 20px;
+    color: var(--text-color);
+}
+
+.user-review h3 {
+    margin-top: 0;
+    color: var(--text-color);
+}
+
+.btn-write-review {
+    display: inline-block;
+    margin-top: 20px;
+}
+
+.review-form-container {
+    max-width: 600px;
+    margin: 40px auto;
+    background-color: var(--card-bg);
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+}
+
+.review-form-container h1 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: var(--text-color);
+    text-align: center;
+}
+
+.review-form .form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.review-form label {
+    margin-bottom: 8px;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.review-form select,
+.review-form textarea {
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #4a4a4a;
+    color: var(--text-color);
+    font-size: 1em;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.review-form textarea {
+    min-height: 150px;
+}
+
+.review-form button[type="submit"] {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--btn-bg);
+    color: var(--text-color);
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.review-form button[type="submit"]:hover {
+    background-color: var(--btn-hover);
+}
+
+.my-reviews-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 0 20px 40px;
+}
+
+.my-reviews-container h1 {
+    color: var(--text-color);
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.review-item {
+    background-color: #4a4a4a;
+    padding: 20px;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+    margin-bottom: 20px;
+    color: var(--text-color);
+}
+
+.review-item h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+}
+
+.review-item p {
+    margin: 6px 0;
+}
+
+.review-item .review-text {
+    margin-top: 10px;
+    background-color: #3e3e3e;
+    padding: 15px;
+    border-radius: 4px;
+    line-height: 1.5;
+}
+
+.review-item .review-text p {
+    margin: 0 0 10px;
+}
+
+.pagination {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination a {
+    background-color: var(--btn-bg);
+    padding: 6px 12px;
+    border-radius: 4px;
+    color: var(--text-color);
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.pagination a:hover {
+    background-color: var(--btn-hover);
+}
+
+.pagination span {
+    color: var(--text-color);
+}
+
+.review-moderation-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 20px 40px;
+}
+
+.review-moderation-container h1 {
+    color: var(--text-color);
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.review-moderation-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--card-bg);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.review-moderation-table thead {
+    background-color: var(--btn-bg);
+}
+
+.review-moderation-table th,
+.review-moderation-table td {
+    padding: 12px 15px;
+    color: var(--text-color);
+    text-align: left;
+}
+
+.review-moderation-table th {
+    font-weight: 600;
+    font-size: 0.95em;
+}
+
+.review-moderation-table tbody tr {
+    border-bottom: 1px solid #444;
+}
+
+.review-moderation-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.review-moderation-table tbody tr:hover {
+    background-color: #3e3e3e;
+}
+
+.review-moderation-table a {
+    background-color: var(--btn-bg);
+    color: var(--text-color);
+    padding: 6px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.review-moderation-table a:hover {
+    background-color: var(--btn-hover);
+}
+
+.pagination {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination a {
+    background-color: var(--btn-bg);
+    padding: 6px 12px;
+    border-radius: 4px;
+    color: var(--text-color);
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.pagination a:hover {
+    background-color: var(--btn-hover);
+}
+
+.pagination span {
+    color: var(--text-color);
+}
+
+.review-detail-container {
+    max-width: 700px;
+    margin: 40px auto;
+    background-color: var(--card-bg);
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+}
+
+.review-detail-container h1 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: var(--text-color);
+    text-align: center;
+}
+
+.review-detail-info p {
+    margin: 8px 0;
+    color: var(--text-color);
+}
+
+.review-detail-text {
+    background-color: #3e3e3e;
+    padding: 20px;
+    border-radius: 6px;
+    margin: 20px 0;
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+.moderation-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.moderation-actions button {
+    padding: 10px 20px;
+    font-size: 1em;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.moderation-actions .btn {
+    background-color: var(--btn-bg);
+    color: var(--text-color);
+}
+
+.moderation-actions .btn:hover {
+    background-color: var(--btn-hover);
+}
+
+.moderation-actions .btn-danger {
+    background-color: var(--danger-bg);
+    color: var(--text-color);
+}
+
+.moderation-actions .btn-danger:hover {
+    background-color: var(--danger-hover);
+}

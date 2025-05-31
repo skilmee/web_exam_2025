@@ -1,0 +1,42 @@
+{% extends "library/base.html" %}
+
+{% block title %}Модерация рецензий{% endblock %}
+
+{% block content %}
+<div class="review-moderation-container">
+  <h1>Рецензии на рассмотрении</h1>
+
+  <table class="review-moderation-table">
+    <thead>
+      <tr>
+        <th>Книга</th>
+        <th>Пользователь</th>
+        <th>Дата</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for review in page_obj %}
+        <tr>
+          <td>{{ review.book.title }}</td>
+          <td>{{ review.user.get_full_name|default:review.user.username }}</td>
+          <td>{{ review.created_at|date:"d.m.Y H:i" }}</td>
+          <td>
+            <a href="{% url 'review_moderation_view' review.id %}">Рассмотреть</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <div class="pagination">
+    {% if page_obj.has_previous %}
+      <a href="?page={{ page_obj.previous_page_number }}">← Назад</a>
+    {% endif %}
+    <span>Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</span>
+    {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}">Вперёд →</a>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

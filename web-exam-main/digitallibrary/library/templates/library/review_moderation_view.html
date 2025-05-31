@@ -1,0 +1,25 @@
+{% extends "library/base.html" %}
+
+{% block title %}Рассмотрение рецензии{% endblock %}
+
+{% block content %}
+<div class="review-detail-container">
+  <h1>Рецензия на «{{ review.book.title }}»</h1>
+
+  <div class="review-detail-info">
+    <p><strong>Пользователь:</strong> {{ review.user.get_full_name|default:review.user.username }}</p>
+    <p><strong>Оценка:</strong> {{ review.rating }}/5</p>
+    <p><strong>Дата:</strong> {{ review.created_at|date:"d.m.Y H:i" }}</p>
+  </div>
+
+  <div class="review-detail-text">
+    {{ review.text|safe }}
+  </div>
+
+  <form method="post" class="moderation-actions">
+    {% csrf_token %}
+    <button type="submit" name="action" value="approve" class="btn">Одобрить</button>
+    <button type="submit" name="action" value="reject" class="btn-danger">Отклонить</button>
+  </form>
+</div>
+{% endblock %}

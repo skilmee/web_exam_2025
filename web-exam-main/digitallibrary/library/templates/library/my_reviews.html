@@ -1,0 +1,34 @@
+{% extends "library/base.html" %}
+
+{% block title %}Мои рецензии{% endblock %}
+
+{% block content %}
+<div class="my-reviews-container">
+  <h1>Мои рецензии</h1>
+
+  {% if page_obj %}
+    {% for review in page_obj %}
+      <div class="review-item">
+        <h3>Книга: {{ review.book.title }}</h3>
+        <p><strong>Оценка:</strong> {{ review.rating }}/5</p>
+        <p><strong>Статус:</strong> {{ review.status.name }}</p>
+        <div class="review-text">
+          {{ review.text|safe }}
+        </div>
+      </div>
+    {% endfor %}
+
+    <div class="pagination">
+      {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}">← Назад</a>
+      {% endif %}
+      <span>Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</span>
+      {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">Вперёд →</a>
+      {% endif %}
+    </div>
+  {% else %}
+    <p style="text-align: center; color: var(--text-color);">Вы ещё не оставляли рецензий.</p>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,47 @@
+<link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
+<script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
+
+<div class="form-group">
+    <label for="title">Название</label>
+    <input type="text" name="title" id="title"
+           value="{{ book.title|default_if_none:'' }}" required>
+</div>
+
+<div class="form-group">
+    <label for="description">Краткое описание</label>
+    <textarea name="description" id="description">{{ book.description|default_if_none:'' }}</textarea>
+</div>
+
+<div class="form-group">
+    <label for="year">Год</label>
+    <input type="number" name="year" id="year"
+           value="{{ book.year|default_if_none:'' }}" required>
+</div>
+
+<div class="form-group">
+    <label for="publisher">Издательство</label>
+    <input type="text" name="publisher" id="publisher"
+           value="{{ book.publisher|default_if_none:'' }}" required>
+</div>
+
+<div class="form-group">
+    <label for="author">Автор</label>
+    <input type="text" name="author" id="author"
+           value="{{ book.author|default_if_none:'' }}" required>
+</div>
+
+<div class="form-group">
+    <label for="pages">Объём (страниц)</label>
+    <input type="number" name="pages" id="pages"
+           value="{{ book.pages|default_if_none:'' }}" required>
+</div>
+
+<div class="form-group">
+    <label for="genres">Жанры</label>
+    <select name="genres" id="genres" multiple required>
+        {% for genre in genres %}
+            <option value="{{ genre.id }}"
+                {% if genre.id in selected_genre_ids %}selected{% endif %}>{{ genre.name }}</option>
+        {% endfor %}
+    </select>
+</div>

@@ -1,0 +1,51 @@
+{% extends "library/base.html" %}
+
+{% block title %}Регистрация{% endblock %}
+
+{% block content %}
+<h1>Регистрация</h1>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <label for="username">Логин</label>
+    <input type="text" name="username" id="username" value="{{ form.username.value|default_if_none:'' }}" required>
+
+    <label for="password1">Пароль</label>
+    <input type="password" name="password1" id="password1" required>
+
+    <label for="last_name">Фамилия</label>
+    <input type="text" name="last_name" id="last_name" value="{{ form.last_name.value|default_if_none:'' }}" required>
+
+    <label for="first_name">Имя</label>
+    <input type="text" name="first_name" id="first_name" value="{{ form.first_name.value|default_if_none:'' }}" required>
+
+    <label for="middle_name">Отчество (необязательно)</label>
+    <input type="text" name="middle_name" id="middle_name" value="{{ form.middle_name.value|default_if_none:'' }}">
+
+    <label for="role">Роль</label>
+    <select name="role" id="role" required>
+        {% for role in form.fields.role.queryset %}
+            <option value="{{ role.id }}"
+                {% if form.role.value|stringformat:"s" == role.id|stringformat:"s" %}selected{% endif %}>
+                {{ role.name }}
+            </option>
+        {% endfor %}
+    </select>
+
+    <button type="submit">Зарегистрироваться</button>
+</form>
+
+{% if form.errors %}
+    <ul class="errors">
+        {% for field in form %}
+            {% for error in field.errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+            <li>{{ error }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+{% endblock %}

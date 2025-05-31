@@ -1,0 +1,56 @@
+{% extends "library/base.html" %}
+
+{% block title %}Главная{% endblock %}
+
+{% block content %}
+
+<h1>Список книг</h1>
+
+<div class="books">
+  {% for book in page_obj %}
+    <div class="book">
+      {% if book.cover %}
+        <img src="/static/library/images/{{ book.cover.filename }}" alt="Обложка книги" class="book-cover">
+      {% else %}
+        <div class="book-cover" style="background-color: #4a4a4a;"></div>
+      {% endif %}
+      <div class="book-info">
+        <h2>{{ book.title }}</h2>
+        <p><strong>Автор:</strong> {{ book.author }}</p>
+        <p><strong>Жанры:</strong> {{ book.genres.all|join:", " }}</p>
+        <p><strong>Год:</strong> {{ book.year }}</p>
+        <p><strong>Средняя оценка:</strong> {{ book.avg_rating|default:"—" }}</p>
+        <p><strong>Рецензий:</strong> {{ book.review_count }}</p>
+        <div class="book-actions">
+          <a href="{% url 'book_view' book.id %}">Просмотр</a>
+          {% if user.is_authenticated and user.role.name in 'moderator administrator' %}
+            <a href="{% url 'book_edit' book.id %}">Редактировать</a>
+          {% endif %}
+          {% if user.is_authenticated and user.role.name == 'administrator' %}
+            <a href="#" onclick="openDeleteModal('{{ book.id }}', '{{ book.title }}')" class="btn-danger">Удалить</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  {% empty %}
+    <p>Книги не найдены.</p>
+  {% endfor %}
+</div>
+
+<div class="pagination">
+  {% if page_obj.has_previous %}
+    <a href="?page={{ page_obj.previous_page_number }}">← Назад</a>
+  {% endif %}
+  <span>Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</span>
+  {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}">Вперёд →</a>
+  {% endif %}
+</div>
+
+{% if user.is_authenticated and user.role.name == 'administrator' %}
+  <div style="text-align: center; margin-top: 30px;">
+    <a href="{% url 'book_create' %}" class="btn">➕ Добавить книгу</a>
+  </div>
+{% endif %}
+
+{% endblock %}
